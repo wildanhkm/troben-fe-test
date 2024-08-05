@@ -8,7 +8,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, computed } from 'vue';
+import { onMounted, computed, onUnmounted } from 'vue';
 import { useRoute } from 'vue-router';
 import { useMovieStore } from '../stores/movieStore';
 import MovieList from '../components/MovieList.vue';
@@ -25,4 +25,8 @@ const searchQuery = computed(() => route.query.q);
 onMounted(async () => {
   await movieStore.searchMovies(searchQuery.value as string);
 });
+
+onUnmounted(() => {
+  movieStore.clearSearchResults()
+})
 </script>

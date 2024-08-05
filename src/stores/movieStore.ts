@@ -14,20 +14,38 @@ export const useMovieStore = defineStore('movie', {
     error: '',
   }),
   getters: {
-    getPopularMovies: (state) => { return state.popularMovies },
-    getMovieDetails: (state) => { return state.movieDetails },
-    getSearchResults: (state) => { return state.searchResults },
-    getLoading: (state) => { return state.loading },
-    getError: (state) => { return state.error },
+    getPopularMovies: (state) => {
+      return state.popularMovies;
+    },
+    getMovieDetails: (state) => {
+      return state.movieDetails;
+    },
+    getSearchResults: (state) => {
+      return state.searchResults;
+    },
+    getLoading: (state) => {
+      return state.loading;
+    },
+    getError: (state) => {
+      return state.error;
+    },
   },
   actions: {
+    clearMovieDetails() {
+      this.movieDetails = {} as MovieType;
+    },
+
+    clearSearchResults() {
+      this.searchResults = [] as MovieType[];
+    },
+    
     async fetchPopularMovies() {
       this.loading = true;
       try {
         const response = await axios.get(`${API_URL}?apikey=${API_KEY}&s=2024&type=movie&y=2024`);
         this.popularMovies = response.data.Search;
       } catch (error) {
-        const catchError = error as ErrorType
+        const catchError = error as ErrorType;
         this.error = catchError.Error;
       } finally {
         this.loading = false;
@@ -39,7 +57,7 @@ export const useMovieStore = defineStore('movie', {
         const response = await axios.get(`${API_URL}?apikey=${API_KEY}&i=${id}`);
         this.movieDetails = response.data;
       } catch (error) {
-        const catchError = error as ErrorType
+        const catchError = error as ErrorType;
         this.error = catchError.Error;
       } finally {
         this.loading = false;
@@ -51,7 +69,7 @@ export const useMovieStore = defineStore('movie', {
         const response = await axios.get(`${API_URL}?apikey=${API_KEY}&s=${query}`);
         this.searchResults = response.data.Search;
       } catch (error) {
-        const catchError = error as ErrorType
+        const catchError = error as ErrorType;
         this.error = catchError.Error;
       } finally {
         this.loading = false;

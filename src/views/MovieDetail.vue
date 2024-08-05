@@ -26,7 +26,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from 'vue';
+import { onMounted, onUnmounted } from 'vue';
 import { useRoute } from 'vue-router';
 import { useMovieStore } from '../stores/movieStore';
 import { storeToRefs } from 'pinia';
@@ -38,5 +38,9 @@ const { getMovieDetails, getLoading } = storeToRefs(movieStore);
 
 onMounted(async () => {
   await movieStore.fetchMovieDetails(route.params.id as string);
+});
+
+onUnmounted(() => {
+  movieStore.clearMovieDetails();
 });
 </script>
