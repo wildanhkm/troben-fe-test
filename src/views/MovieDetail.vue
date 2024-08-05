@@ -21,7 +21,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, computed } from 'vue';
+import { onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import { useMovieStore } from '../stores/movieStore';
 import { storeToRefs } from 'pinia';

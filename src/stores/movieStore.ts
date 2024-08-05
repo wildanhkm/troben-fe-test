@@ -1,14 +1,15 @@
 import { defineStore } from 'pinia';
 import axios from 'axios';
+import { MovieType } from '../types';
 
-const API_KEY = 'YOUR_OMDB_API_KEY';
+const API_KEY = import.meta.env.VITE_API_KEY;
 const API_URL = 'https://www.omdbapi.com/';
 
 export const useMovieStore = defineStore('movie', {
   state: () => ({
-    popularMovies: [],
-    movieDetails: null,
-    searchResults: [],
+    popularMovies: [] as MovieType[],
+    movieDetails: {} as MovieType,
+    searchResults: [] as MovieType[],
     loading: false,
     error: null,
   }),

@@ -13,14 +13,21 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, withDefaults } from 'vue';
+import { defineProps, onMounted, withDefaults } from 'vue';
+import { MovieType } from '../types';
 
 const props = withDefaults(
   defineProps<{
-    movies: [] as any[]
+    movies: MovieType[]
   }>(),
   {
-    movies: []
+    movies: () => {
+      return [] as MovieType[]
+    }
   }
 )
+
+onMounted(() => {
+  console.log('props :>> ', props);
+})
 </script>
