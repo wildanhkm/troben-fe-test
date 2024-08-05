@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import axios from 'axios';
-import { MovieType } from '../types';
+import { MovieType, ErrorType } from '../types';
 
 const API_KEY = import.meta.env.VITE_API_KEY;
 const API_URL = 'https://www.omdbapi.com/';
@@ -11,7 +11,7 @@ export const useMovieStore = defineStore('movie', {
     movieDetails: {} as MovieType,
     searchResults: [] as MovieType[],
     loading: false,
-    error: null,
+    error: '',
   }),
   getters: {
     getPopularMovies: (state) => { return state.popularMovies },
@@ -27,7 +27,8 @@ export const useMovieStore = defineStore('movie', {
         const response = await axios.get(`${API_URL}?apikey=${API_KEY}&s=2024&type=movie&y=2024`);
         this.popularMovies = response.data.Search;
       } catch (error) {
-        this.error = error.message;
+        const catchError = error as ErrorType
+        this.error = catchError.Error;
       } finally {
         this.loading = false;
       }
@@ -38,7 +39,8 @@ export const useMovieStore = defineStore('movie', {
         const response = await axios.get(`${API_URL}?apikey=${API_KEY}&i=${id}`);
         this.movieDetails = response.data;
       } catch (error) {
-        this.error = error.message;
+        const catchError = error as ErrorType
+        this.error = catchError.Error;
       } finally {
         this.loading = false;
       }
@@ -49,7 +51,8 @@ export const useMovieStore = defineStore('movie', {
         const response = await axios.get(`${API_URL}?apikey=${API_KEY}&s=${query}`);
         this.searchResults = response.data.Search;
       } catch (error) {
-        this.error = error.message;
+        const catchError = error as ErrorType
+        this.error = catchError.Error;
       } finally {
         this.loading = false;
       }

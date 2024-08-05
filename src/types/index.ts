@@ -30,3 +30,8 @@ export type RatingType = {
   Source: string;
   Value: string;
 };
+
+export type ErrorType = {
+  Response: string;
+  Error: string;
+};
